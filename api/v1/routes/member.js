@@ -1,8 +1,24 @@
-const { Member } = require('../data/models/member');
+const { Member } = require('../models/member');
+const { Op } = require("sequelize");
 
 const getMembers = async (req, res) => {
     try {
-        const data = await Member.findAll();
+        const text = req.query.q ? `%${req.query.q}%` : null;
+        const options = !text ? {} : {
+            where: {
+                [Op.or]: [{
+                    name: {
+                        [Op.iLike]: text
+                    }
+                }, {
+                    title: {
+                        [Op.iLike]: text
+                    },
+                }]
+            }
+        };
+        console.log(text);
+        const data = await Member.findAll(options);
         res.json(data);
     } catch (e) {
         res.send(e);
@@ -11,10 +27,10 @@ const getMembers = async (req, res) => {
 
 const createMember = async (req, res) => {
     try {
-        const members = await Member.findAll();
-        return res.json(members);
+        const data = await Member.create(req.body);
+        res.json(data);
     } catch (e) {
-        return res.send(e);
+        res.send(e);
     }
 };
 

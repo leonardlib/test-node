@@ -1,4 +1,4 @@
-const { getDBConnection } = require('./data/utils');
+const { getDBConnectionV1, validateParams } = require('./api/utils');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -6,14 +6,15 @@ const bodyParser = require('body-parser');
 const port = 3001;
 
 // Routes
-const members = require('./routes/member');
+const membersV1 = require('./api/v1/routes/member');
+const { MemberParamsV1 } = require("./api/v1/models/member");
 
 // DB connection
-const db = getDBConnection();
+const dbV1 = getDBConnectionV1();
 
 (async () => {
     // DB initialization
-    await db.sync({ force: true });
+    await dbV1.sync();
 
     // Server initialization
     app.use(cors());
@@ -22,30 +23,27 @@ const db = getDBConnection();
     app.use(bodyParser.text());
     app.use(bodyParser.json({ type: 'application/json' }));
 
+    // Index route
     app.get('/', (req, res) => {
         res.json({
             message: 'Testing a Node JS API'
         });
     });
 
-    app.route('/members')
-        .get(members.getMembers)
-        // .post(members.createMember);
+    // Routers
+    const routerV1 = express.Router();
 
-    /*
-    app.route('/members/:id')
-        .get(members.getMember)
-        .delete(members.deleteMember)
-        .put(members.updateMember);
+    // API V1
+    routerV1.route('/members')
+        .get(membersV1.getMembers)
+        .post(validateParams(MemberParamsV1), membersV1.createMember);
+    routerV1.route('/members/:id')
+        .get(membersV1.getMember)
+        .delete(membersV1.deleteMember)
+        .put(membersV1.updateMember);
 
-    /*
-    app.get('/api/v1/members', (req, res) => {
-        const text = req.query.q;
-        const new_data = data.filter(m => m.name.toLowerCase().includes(text.toLowerCase()));
-        res.json(new_data);
-    })
-    */
-
+    // Launch server
+    app.use('/api/v1', routerV1);
     app.listen(port, () => {
         console.log(`Listening at http://localhost:${port}`)
     })
