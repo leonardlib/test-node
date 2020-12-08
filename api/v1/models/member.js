@@ -1,8 +1,13 @@
-const { getDBConnectionV1 } = require('../../utils');
+const { getDBConnection } = require('../../utils');
 const { DataTypes } = require('sequelize');
-const db = getDBConnectionV1();
+const db = getDBConnection();
 
-const MemberParamsV1 = [{
+/**
+ * Params for POST and PUT requests
+ * @author @leonard_lib
+ * @date 2020-12-07
+ */
+const MemberParams = [{
     key: 'name',
     required: true,
     type: 'string',
@@ -18,10 +23,16 @@ const MemberParamsV1 = [{
     ]
 }];
 
+/**
+ * Member model on database
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @type {ModelCtor<Model>}
+ */
 const Member = db.define('member', {
     name: DataTypes.STRING,
     title: DataTypes.STRING
 });
 
-exports.MemberParamsV1 = MemberParamsV1;
+exports.MemberParams = MemberParams;
 exports.Member = Member;

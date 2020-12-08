@@ -4,7 +4,13 @@ const {
 } = require('sequelize');
 let connection = null;
 
-const getDBConnectionV1 = () => {
+/**
+ * Get the database connection instance
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @returns {null}
+ */
+const getDBConnection = () => {
     if (!connection) {
         connection = new Sequelize({
             dialect: "sqlite",
@@ -15,15 +21,39 @@ const getDBConnectionV1 = () => {
     return connection;
 };
 
+/**
+ * Check if param is on request body params
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @param params
+ * @param param
+ * @returns {*}
+ */
 const checkParamPresent = (params, param) => {
     return params.includes(param.key);
 };
 
+/**
+ * Check if request body param type is fine
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @param reqParam
+ * @param paramObj
+ * @returns {boolean}
+ */
 const checkParamType = (reqParam, paramObj) => {
     const reqParamType = typeof reqParam;
     return reqParamType === paramObj.type;
 };
 
+/**
+ * Run request body params validations
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @param reqParam
+ * @param paramObj
+ * @returns {boolean}
+ */
 const runValidators = (reqParam, paramObj) => {
     for (let validator of paramObj.validators) {
         if (!validator(reqParam)) {
@@ -34,6 +64,13 @@ const runValidators = (reqParam, paramObj) => {
     return true;
 };
 
+/**
+ * Verify request body params on endpoints
+ * @author @leonard_lib
+ * @date 2020-12-07
+ * @param params
+ * @returns {function(*, *, *): (*|undefined)}
+ */
 const validateParams = params => {
     return (req, res, next) => {
         for (let param of params) {
@@ -65,5 +102,5 @@ const validateParams = params => {
     }
 };
 
-exports.getDBConnectionV1 = getDBConnectionV1;
+exports.getDBConnection = getDBConnection;
 exports.validateParams = validateParams;
