@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "export NODE_ENV=dev && nodemon index.js",
-    "test": "mocha --timeout 10000"
+    "test": "export NODE_ENV=test && mocha 'api/v1/test/**/*.js' --timeout 5000 --exit"
   },
   "author": "leonardlib <leonardolirabecerra@gmail.com>",
   "dependencies": {
