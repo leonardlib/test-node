@@ -21,14 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7d228249-aacf-42ba-9f54-abc3c45f824b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/db/db_dev.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/models/member.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/models/member.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/routes/member.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/routes/member.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/test.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db_dev.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/db_dev.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +111,7 @@
       <workItem from="1607033277355" duration="3299000" />
       <workItem from="1607127753795" duration="7404000" />
       <workItem from="1607189655811" duration="4608000" />
-      <workItem from="1607386956402" duration="2376000" />
+      <workItem from="1607386956402" duration="8114000" />
     </task>
     <servers />
   </component>

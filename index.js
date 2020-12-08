@@ -51,6 +51,9 @@ const db = getDBConnection();
     // Launch server
     app.use('/api/v1', router);
     app.listen(port, () => {
-        console.log(`Listening at http://localhost:${port}`)
-    })
+        console.log(`Listening at http://localhost:${port}`);
+        app.emit('ready');
+    });
 })();
+
+module.exports = app;
