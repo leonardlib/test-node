@@ -1,20 +1,25 @@
 {
   "name": "test-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project to test a Node JS API",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "export NODE_ENV=dev && nodemon index.js",
+    "test": "mocha --timeout 10000"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "leonardlib <leonardolirabecerra@gmail.com>",
   "dependencies": {
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "config": "^3.3.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mocha": "^8.2.1",
-    "request": "^2.88.2"
-  }
+    "nodemon": "^2.0.6",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
+  },
+  "repository": "https://github.com/leonardlib/test-node.git"
 }

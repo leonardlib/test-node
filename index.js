@@ -1,73 +1,56 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const { getDBConnection, validateParams } = require('./api/utils');
+const express = require('express');
+const app = express();
+const cors = require('cors');
 const bodyParser = require('body-parser');
+const port = 3001;
 
-const port = 3000
+// Routes
+const members = require('./api/v1/routes/member');
+const { MemberParams } = require("./api/v1/models/member");
 
-const data = [
-    {
-        "id": 1,
-        "name": "Clara",
-        "title": "Mother"
-    },
-    {
-        "id": 2,
-        "name": "Roberth",
-        "title": "Father"
-    },
-    {
-        "id": 3,
-        "name": "Roberth Jr",
-        "title": "Son"
-    },
-    {
-        "id": 4,
-        "name": "Clara Jr",
-        "title": "Daughter"
-    },
-    {
-        "id": 5,
-        "name": "Angela",
-        "title": "Daughter"
-    },
-    {
-        "id": 6,
-        "name": "James Jr",
-        "title": "Son"
-    },
-    {
-        "id": 7,
-        "name": "James",
-        "title": "Father"
-    },
-    {
-        "id": 8,
-        "name": "Sam",
-        "title": "Father"
-    },
-    {
-        "id": 9,
-        "name": "Sam Jr",
-        "title": "Son"
-    },
-    {
-        "id": 10,
-        "name": "Deborah",
-        "title": "Daughter"
-    }
-];
+// DB connection
+const db = getDBConnection();
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+(async () => {
+    // DB initialization
+    await db.sync({ alter: true });
 
-app.get('/api/v1/members', (req, res) => {
-    const text = req.query.q;
-    const new_data = data.filter(m => m.name.toLowerCase().includes(text.toLowerCase()));
-    res.json(new_data);
-})
+    // Server initialization
+    app.use(cors());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(bodyParser.text());
+    app.use(bodyParser.json({ type: 'application/json' }));
 
-app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`)
-})
+    // Index route
+    app.get('/', (req, res) => {
+        res.json({
+            message: 'Testing a Node JS API'
+        });
+    });
+
+    // Routers
+    const router = express.Router();
+
+    // API V1
+    router.route('/members')
+        .get(members.getMembers)
+        .post(
+            validateParams(MemberParams),
+            members.createMember,
+        );
+    router.route('/members/:id')
+        .get(members.getMember)
+        .delete(members.deleteMember)
+        .put(
+            validateParams(MemberParams),
+            members.updateMember,
+        );
+
+    // Launch server
+    app.use('/api/v1', router);
+    app.listen(port, () => {
+        console.log(`Listening at http://localhost:${port}`)
+    })
+})();
